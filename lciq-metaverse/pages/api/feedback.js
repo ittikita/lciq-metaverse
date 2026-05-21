@@ -19,10 +19,10 @@ export default async function handler(req, res) {
       }),
     });
 
-    console.log("Anthropic response:", JSON.stringify(data));
+    const data = await response.json();
     const text = data.content?.filter(b => b.type === "text").map(b => b.text).join("") || "";
     res.status(200).json({ text });
   } catch (e) {
-    res.status(500).json({ error: "API error" });
+    res.status(500).json({ error: e.message });
   }
 }
