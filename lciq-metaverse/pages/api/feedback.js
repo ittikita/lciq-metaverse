@@ -19,7 +19,7 @@ export default async function handler(req, res) {
       }),
     });
 
-    const data = await response.json();
+    console.log("Anthropic response:", JSON.stringify(data));
     const text = data.content?.filter(b => b.type === "text").map(b => b.text).join("") || "";
     res.status(200).json({ text });
   } catch (e) {
