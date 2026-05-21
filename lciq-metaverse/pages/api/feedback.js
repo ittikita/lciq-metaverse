@@ -20,9 +20,14 @@ export default async function handler(req, res) {
     });
 
     const data = await response.json();
-    const text = data.content?.filter(b => b.type === "text").map(b => b.text).join("") || "";
+
+    if (!response.ok) {
+      return res.status(200).json({ text: "エラー: " + JSON.stringify(data) });
+    }
+
+    const text = data.content?.[0]?.text || "レスポンス空: " + JSON.stringify(data);
     res.status(200).json({ text });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    res.status(200).json({ text: "例外: " + e.message });
   }
 }
