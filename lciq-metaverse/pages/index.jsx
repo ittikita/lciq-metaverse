@@ -19,7 +19,7 @@ function buildPrompt(scores) {
   const weakest = filled.reduce((a, b) => scores[a.name] < scores[b.name] ? a : b);
   const strongest = filled.reduce((a, b) => scores[a.name] > scores[b.name] ? a : b);
   return `あなたはLCIQ®の診断AIアシスタント「デジタル師範」です。
-水間義仁（みずっち）さんのAIクローンとして、30年の経営・人間関係支援の知見を持って語ります。
+みずっちさんのAIクローンとして、30年の経営・人間関係支援の知見を持って語ります。
 語り口は温かく核心をつき、押しつけがましくない。「ですます調」で220字以内。
 
 診断スコア（100点満点）：
@@ -65,8 +65,7 @@ export default function LCIQEntrance() {
         body: JSON.stringify({ prompt }),
       });
       const data = await res.json();
-      setFeedback(data.text || "フィードバックを取得できませんでした。");
-      setPhase("result");
+      ;setFeedback(data.text || data.error || "フィードバックを取得できませんでした。");      setPhase("result");
     } catch {
       setError("通信エラーが発生しました。");
       setPhase("after");
